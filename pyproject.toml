@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "phantom-buster-linkdin"
+version = "0.1.0"
+description = "Service that will process linkdin user feeds via phantom-buster saas"
+authors = ["KamranValijonov <kamranvalijonov@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = {extras = ["all"], version = "^2.7.1"}
+asyncpg = "^0.29.0"
+alembic = "^1.13.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.30"}
+pydantic-settings = "^2.2.1"
+psycopg2 = "^2.9.9"
+aiohttp = "^3.9.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
