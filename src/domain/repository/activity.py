@@ -11,7 +11,25 @@ from src.domain.entity import ActivityFilter, Activity
 class BaseActivityRepository(ABC):
     """
     Interface for the activity repository.
+
+    IMPORTANT: All the repositories MUST be used with a context manager to ensure
+    that all the subclass-related setup is done properly. Additionally, the `inherit_setup`
+    method should be used to inherit the setup from any class having the common setup configurations.
     """
+
+    @abstractmethod
+    async def __aenter__(self):
+        """
+        Enter the context manager.
+        """
+        ...
+
+    @abstractmethod
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """
+        Exit the context manager.
+        """
+        ...
 
     @abstractmethod
     async def create(self, activity: Activity) -> Activity:
@@ -31,6 +49,13 @@ class BaseActivityRepository(ABC):
     async def list(self, filters: ActivityFilter, limit: int, offset: int) -> List[Activity]:
         """
         List all activities.
+        """
+        ...
+
+    @abstractmethod
+    async def list_distinct_profiles(self) -> List[str]:
+        """
+        Get distinct profiles.
         """
         ...
 

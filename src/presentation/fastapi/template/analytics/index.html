@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Report{% endblock %}
+
+{% block content %}
+<div class="container" style="max-height: 80vh; max-width: 100%">
+    <h1 class="text-white">Profile Report</h1>
+    <div style="max-height: 80vh; overflow-y: auto;">
+        <table class="table table-dark table-striped" style="position: relative;">
+            <thead class="thead-dark" style="position: sticky; top: 0; text-align: center; z-index: 1;">
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Average Text Length</th>
+                    <th>Average Postings Per Month</th>
+                    <th>Average Headline Length</th>
+                    <th>Average Emojis</th>
+                    <th>Average Likes</th>
+                    <th>Average Comments</th>
+                    <th>Average Paragraphs</th>
+                    <th>Average Hashtags</th>
+                    <th>Percentage Visuals Used</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report.start_date }}</td>
+                    <td>{{ report.end_date }}</td>
+                    <td>{{ report.average_text_length }}</td>
+                    <td>{{ report.average_postings_per_month }}</td>
+                    <td>{{ report.average_headline_length }}</td>
+                    <td>{{ report.average_emojis }}</td>
+                    <td>{{ report.average_likes }}</td>
+                    <td>{{ report.average_comments }}</td>
+                    <td>{{ report.average_paragraphs }}</td>
+                    <td>{{ report.average_hashtags }}</td>
+                    <td>{{ report.percentage_visuals_used }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

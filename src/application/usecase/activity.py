@@ -14,21 +14,25 @@ class BaseActivityUseCase(ABC):
         ...
 
     @abstractmethod
-    async def list(self, filters: ActivityFilter, limit: int, offset: int) -> list[Activity]:
+    async def list(self, filters: ActivityFilter | None, limit: int, offset: int) -> list[Activity]:
         """
         List all activities.
         """
         ...
 
 
-class ActivityUseCase:
+class ActivityUseCase(BaseActivityUseCase):
     def __init__(self, activity_repo: BaseActivityRepository, activity_provider: BaseActivityProvider):
         self.activity_repo = activity_repo
         self.activity_provider = activity_provider
 
     async def sync(self) -> list[Activity]:
-        activities = await self.activity_provider.sync()
-        return await self.activity_repo.bulk_create(activities)
+        # figure out how to avoid using multiple context managers for same purpose.
+        async with self.activity_provider as provider, self.activity_repo as repo:
+            activities = await provider.sync()
+            results = await repo.bulk_create(activities)
+            return results
 
     async def list(self, filters: ActivityFilter, limit: int, offset: int) -> list[Activity]:
-        return await self.activity_repo.list(filters, limit, offset)
+        async with self.activity_repo as repo:
+            return await repo.list(filters, limit, offset)

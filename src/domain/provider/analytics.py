@@ -1,13 +1,16 @@
 """
-This module contains the interface for the activity provider.
+This module contains the interface for the analytics report provider.
 """
 
 from abc import ABC, abstractmethod
+from typing import List
 
 from src.domain.entity import Activity
+from src.domain.entity.analytics.filter import AnalyticsReportFilter
+from src.domain.entity.analytics.model import AnalyticsReport
 
 
-class BaseActivityProvider(ABC):
+class BaseAnalyticsReportProvider(ABC):
     """
     Interface for the activity provider.
 
@@ -16,10 +19,7 @@ class BaseActivityProvider(ABC):
     """
 
     @abstractmethod
-    async def sync(self) -> list[Activity]:
-        """
-        Get activities with filters.
-        """
+    async def generate_report(self, activities: List[Activity]) -> AnalyticsReport:
         ...
 
     @abstractmethod

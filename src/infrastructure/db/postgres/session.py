@@ -13,11 +13,11 @@ class DatabaseSessionManager:
     def __init__(
             self,
             host: str,
-            engine_kwargs: dict[str, Any],
-            session_maker_kwargs: dict[str, Any],
+            engine_kwargs: dict[str, Any] | None,
+            session_maker_kwargs: dict[str, Any] | None,
     ):
         self._engine = create_async_engine(host, **engine_kwargs)
-        self._session_maker = async_sessionmaker(self._engine, **session_maker_kwargs)
+        self._session_maker = async_sessionmaker(bind=self._engine, **session_maker_kwargs)
 
     async def close(self):
         if self._engine is None:
@@ -47,8 +47,20 @@ class DatabaseSessionManager:
         session = self._session_maker()
         try:
             yield session
+            print("Session is yielded in SessionManager.")
         except Exception:
             await session.rollback()
             raise
         finally:
+            await session.commit()
+            print("Session is committed in SessionManager.")
             await session.close()
+            print("Session is closed after commit.")
+
+    def give_session(self) -> AsyncSession:
+        if self._session_maker is None:
+            raise Exception("DatabaseSessionManager is not initialized")
+
+        session = self._session_maker()
+        return session
+

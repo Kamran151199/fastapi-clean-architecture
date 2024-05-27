@@ -10,10 +10,13 @@ python = "^3.10"
 pydantic = {extras = ["all"], version = "^2.7.1"}
 asyncpg = "^0.29.0"
 alembic = "^1.13.1"
-sqlalchemy = {extras = ["asyncio"], version = "^2.0.30"}
 pydantic-settings = "^2.2.1"
-psycopg2 = "^2.9.9"
 aiohttp = "^3.9.5"
+fastapi = {extras = ["all"], version = "^0.111.0"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.30"}
+psycopg2 = "^2.9.9"
+pandas = "^2.2.2"
+emoji = "^2.12.1"
 
 
 [build-system]

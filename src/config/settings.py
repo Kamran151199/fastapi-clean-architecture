@@ -11,6 +11,8 @@ from pydantic import (
 from pydantic_settings import BaseSettings
 
 
+
+
 class Settings(BaseSettings):
     """
     Application settings.
@@ -22,6 +24,8 @@ class Settings(BaseSettings):
     pg_name: str = Field(..., alias="POSTGRES_DB", env="POSTGRES_DB")
     pg_user: str = Field(..., alias="POSTGRES_USER", env="POSTGRES_USER")
     pg_password: str = Field(..., alias="POSTGRES_PASSWORD", env="POSTGRES_PASSWORD")
+    phantom_buster_api_key: str = Field(..., alias="PHANTOM_BUSTER_API_KEY", env="PHANTOM_BUSTER_API_KEY")
+    phantom_buster_base_url: str = Field(..., alias="PHANTOM_BUSTER_BASE_URL", env="PHANTOM_BUSTER_BASE_URL")
 
     @computed_field
     def pg_dsn(self) -> PostgresDsn:

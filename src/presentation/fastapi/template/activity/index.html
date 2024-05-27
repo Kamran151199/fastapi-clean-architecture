@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Activity Page{% endblock %}
+
+{% block content %}
+<div class="container" style="max-height: 80vh; max-width: 100%">
+    <h1 class="text-white">Profile Activities</h1>
+    <div style="max-height: 80vh; overflow-y: auto;">
+        <table class="table table-dark table-striped" style="position: relative;">
+            <thead class="thead-dark" style="position: sticky; top: 0; text-align: center; z-index: 1;">
+                <tr>
+                    <th>Post URL</th>
+                    <th>Type</th>
+                    <th>Image URL</th>
+                    <th>Post Content</th>
+                    <th>Like Count</th>
+                    <th>Comment Count</th>
+                    <th>Repost Count</th>
+                    <th>Post Date</th>
+                    <th>Action</th>
+                    <th>Profile URL</th>
+                    <th>Timestamp</th>
+                    <th>Post Timestamp</th>
+                    <th>Agent ID</th>
+                    <th>Container ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.post_url }}</td>
+                    <td>{{ activity.type }}</td>
+                    <td>{{ activity.img_url }}</td>
+                    <td>{{ activity.post_content }}</td>
+                    <td>{{ activity.like_count }}</td>
+                    <td>{{ activity.comment_count }}</td>
+                    <td>{{ activity.repost_count }}</td>
+                    <td>{{ activity.post_date }}</td>
+                    <td>{{ activity.action }}</td>
+                    <td>{{ activity.profile_url }}</td>
+                    <td>{{ activity.timestamp }}</td>
+                    <td>{{ activity.post_timestamp }}</td>
+                    <td>{{ activity.agent_id }}</td>
+                    <td>{{ activity.container_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

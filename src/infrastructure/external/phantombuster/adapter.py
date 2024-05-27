@@ -1,5 +1,5 @@
 from urllib.parse import urljoin
-from schema import APIResponse
+from src.infrastructure.external.phantombuster.schema import APIResponse
 
 import aiohttp
 
@@ -29,17 +29,11 @@ class PhantomBusterAdapterBase:
 
         async with aiohttp.ClientSession() as session:
             async with session.request(method, full_url, json=payload, headers=full_headers) as response:
+                response_data = {"ok": False, "error": response.reason, "data": None, "status_code": response.status,
+                                 "message": None, "status_message": response.reason}
                 if response.ok:
-                    response_data = await response.json()
-                response_data = {
-                    "data": None,
-                    "ok": False,
-                    "error": None,
-                    "message": None,
-                    "statusCode": response.status,
-                    "statusMessage": response.reason,
-                }
-
+                    data = await response.json()
+                    response_data = {"ok": True, "data": data, "error": None, "status_code": response.status}
                 return APIResponse(**response_data)
 
 
